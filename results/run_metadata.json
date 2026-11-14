@@ -1,0 +1,159 @@
+{
+  "software": {
+    "python": "3.13.18",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1",
+    "lightgbm": "4.7.0",
+    "shap": "0.54.1",
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1"
+  },
+  "seed": 42,
+  "cv_folds": 5,
+  "n_bootstrap": 1000,
+  "cohort": {
+    "raw_encounters": 101766,
+    "unique_patients": 71518,
+    "first_encounters": 71518,
+    "excluded_death_hospice": 1545,
+    "final_cohort": 69973,
+    "readmitted_30d": 6277,
+    "prevalence": 0.08970602946850928
+  },
+  "partitions": {
+    "train": [
+      41983,
+      3766
+    ],
+    "conformal_calibration": [
+      13995,
+      1256
+    ],
+    "test": [
+      13995,
+      1255
+    ],
+    "n_features_encoded": 265
+  },
+  "tuning": {
+    "Logistic Regression": {
+      "cv_auroc": 0.6480864634647844,
+      "best_params": {
+        "C": 0.1
+      }
+    },
+    "Random Forest": {
+      "cv_auroc": 0.6561748344839335,
+      "best_params": {
+        "min_samples_leaf": 20,
+        "max_features": 0.2,
+        "max_depth": 16
+      }
+    },
+    "XGBoost": {
+      "cv_auroc": 0.6568848690856063,
+      "best_params": {
+        "subsample": 0.7,
+        "reg_lambda": 5.0,
+        "n_estimators": 600,
+        "min_child_weight": 1,
+        "max_depth": 4,
+        "learning_rate": 0.02,
+        "colsample_bytree": 0.5
+      }
+    },
+    "LightGBM": {
+      "cv_auroc": 0.6585528713436775,
+      "best_params": {
+        "subsample": 0.8,
+        "num_leaves": 15,
+        "n_estimators": 600,
+        "min_child_samples": 50,
+        "learning_rate": 0.02,
+        "colsample_bytree": 0.5
+      }
+    }
+  },
+  "threshold": {
+    "threshold": 0.0819831927549301,
+    "sensitivity": 0.5593625498007968,
+    "specificity": 0.6576923076923077,
+    "PPV": 0.13865297254592138,
+    "NPV": 0.9380877742946708,
+    "F1": 0.2222222222222222,
+    "balanced_accuracy": 0.6085274287465523
+  },
+  "r2_8_calibration_check": {
+    "spearman_uncal_vs_cv_calibrated": 0.995035273546979,
+    "spearman_uncal_vs_same_score_sigmoid": 0.9999999999912443,
+    "auroc_same_score_sigmoid": 0.6502982731554161,
+    "auprc_same_score_sigmoid": 0.16979492492432022,
+    "auroc_diff_cal_minus_uncal": 0.0011895901480419857,
+    "auroc_diff_ci": [
+      -0.00037331131441407375,
+      0.0027985707425261398
+    ]
+  },
+  "representative_patients": {
+    "Confident-correct": {
+      "test_index": 8,
+      "calibrated_risk": 0.057180278683263384,
+      "observed": 0,
+      "top_contributions": {
+        "discharge_disposition_id": -0.3050000071525574,
+        "medical_specialty": -0.2370000034570694,
+        "number_diagnoses": -0.11400000005960464,
+        "number_outpatient": 0.10199999809265137,
+        "number_inpatient": -0.09000000357627869
+      },
+      "values": {
+        "discharge_disposition_id": "1",
+        "medical_specialty": "ObstetricsandGynecology",
+        "number_diagnoses": "4",
+        "number_outpatient": "1",
+        "number_inpatient": "0"
+      }
+    },
+    "Confident-incorrect": {
+      "test_index": 5512,
+      "calibrated_risk": 0.15743025869158023,
+      "observed": 0,
+      "top_contributions": {
+        "number_inpatient": 0.31299999356269836,
+        "time_in_hospital": 0.10100000351667404,
+        "insulin": 0.08299999684095383,
+        "payer_code": -0.0560000017285347,
+        "discharge_disposition_id": 0.04699999839067459
+      },
+      "values": {
+        "number_inpatient": "1",
+        "time_in_hospital": "6",
+        "insulin": "Down",
+        "payer_code": "MC",
+        "discharge_disposition_id": "6"
+      }
+    },
+    "Ambiguous": {
+      "test_index": 13005,
+      "calibrated_risk": 0.07538302726301126,
+      "observed": 0,
+      "top_contributions": {
+        "discharge_disposition_id": -0.23999999463558197,
+        "diag_1": 0.1120000034570694,
+        "number_inpatient": -0.08699999749660492,
+        "insulin": 0.08500000089406967,
+        "payer_code": 0.07100000232458115
+      },
+      "values": {
+        "discharge_disposition_id": "1",
+        "diag_1": "Circulatory",
+        "number_inpatient": "0",
+        "insulin": "Down",
+        "payer_code": "Unknown"
+      }
+    }
+  },
+  "runtime_seconds": 755
+}
